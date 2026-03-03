@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Chamados</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -26,35 +20,21 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .main-content {
-            padding: 30px;
-        }
-
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .main-content { padding: 30px; }
+        
         .estatisticas {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin-bottom: 30px;
         }
-
         .estatistica-card {
             background: white;
             padding: 20px;
@@ -64,19 +44,8 @@
             border-left: 4px solid #667eea;
             cursor: pointer;
         }
-
-        .estatistica-card h3 {
-            color: #666;
-            font-size: 1em;
-            margin-bottom: 10px;
-        }
-
-        .estatistica-card .numero {
-            font-size: 2em;
-            font-weight: bold;
-            color: #333;
-        }
-
+        .estatistica-card h3 { color: #666; font-size: 1em; margin-bottom: 10px; }
+        .estatistica-card .numero { font-size: 2em; font-weight: bold; color: #333; }
         .estatistica-card.total { border-left-color: #667eea; }
         .estatistica-card.pendente { border-left-color: #dc3545; }
         .estatistica-card.concluido { border-left-color: #28a745; }
@@ -92,7 +61,6 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .alerta-prazo button {
             background: #856404;
             color: white;
@@ -111,7 +79,6 @@
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
         }
-
         .filtros-section input,
         .filtros-section select,
         .filtros-section button {
@@ -120,7 +87,6 @@
             border-radius: 6px;
             font-size: 1em;
         }
-
         .filtros-section button {
             background: #667eea;
             color: white;
@@ -128,14 +94,8 @@
             cursor: pointer;
             font-weight: bold;
         }
-
-        .btn-adicionar {
-            background: #28a745 !important;
-        }
-
-        .btn-relatorios {
-            background: #17a2b8 !important;
-        }
+        .btn-adicionar { background: #28a745 !important; }
+        .btn-relatorios { background: #17a2b8 !important; }
 
         .grupos-container {
             display: grid;
@@ -143,13 +103,11 @@
             gap: 30px;
             margin-top: 30px;
         }
-
         .grupo {
             background: #f8f9fa;
             border-radius: 8px;
             overflow: hidden;
         }
-
         .grupo h2 {
             padding: 15px;
             margin: 0;
@@ -157,16 +115,9 @@
             font-size: 1.3em;
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
-
-        .grupo.atender h2 {
-            background: #dc3545;
-        }
-
-        .grupo.atendidos h2 {
-            background: #28a745;
-        }
+        .grupo.atender h2 { background: #dc3545; }
+        .grupo.atendidos h2 { background: #28a745; }
 
         .tarefas-lista {
             min-height: 200px;
@@ -183,12 +134,10 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             border-left: 4px solid #667eea;
         }
-
         .tarefa-card.atendida {
             opacity: 0.8;
             border-left-color: #28a745;
         }
-
         .tarefa-card.atendida .titulo-tarefa {
             text-decoration: line-through;
             color: #6c757d;
@@ -200,17 +149,8 @@
             align-items: center;
             margin-bottom: 10px;
         }
-
-        .titulo-tarefa {
-            font-weight: bold;
-            font-size: 1.1em;
-            color: #333;
-        }
-
-        .checkbox-concluida {
-            transform: scale(1.2);
-            cursor: pointer;
-        }
+        .titulo-tarefa { font-weight: bold; font-size: 1.1em; color: #333; }
+        .checkbox-concluida { transform: scale(1.2); cursor: pointer; }
 
         .tarefa-info {
             display: grid;
@@ -220,18 +160,13 @@
             font-size: 0.9em;
             color: #666;
         }
-
-        .tarefa-info p {
-            margin: 5px 0;
-        }
+        .tarefa-info p { margin: 5px 0; }
 
         .descricao-tarefa {
             margin-top: 10px;
             padding: 10px;
             background: #f8f9fa;
             border-radius: 4px;
-            font-size: 0.95em;
-            color: #555;
         }
 
         .acoes-tarefa {
@@ -240,24 +175,14 @@
             margin-top: 10px;
             justify-content: flex-end;
         }
-
         .btn-editar, .btn-excluir {
             padding: 5px 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.9em;
         }
-
-        .btn-editar {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .btn-excluir {
-            background: #dc3545;
-            color: white;
-        }
+        .btn-editar { background: #ffc107; color: #333; }
+        .btn-excluir { background: #dc3545; color: white; }
 
         .loading {
             display: none;
@@ -272,7 +197,6 @@
             align-items: center;
             flex-direction: column;
         }
-
         .loading-spinner {
             width: 50px;
             height: 50px;
@@ -281,11 +205,7 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .mensagem {
             position: fixed;
@@ -297,20 +217,11 @@
             z-index: 1001;
             animation: slideIn 0.3s ease;
         }
-
         .mensagem.sucesso { background: #28a745; }
         .mensagem.erro { background: #dc3545; }
-        .mensagem.info { background: #17a2b8; }
-
         @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .modal {
@@ -323,7 +234,6 @@
             background: rgba(0,0,0,0.5);
             z-index: 1000;
         }
-
         .modal-content {
             background: white;
             width: 90%;
@@ -332,11 +242,7 @@
             padding: 30px;
             border-radius: 10px;
         }
-
-        .modal-content h3 {
-            margin-bottom: 20px;
-        }
-
+        .modal-content h3 { margin-bottom: 20px; }
         .modal-content input,
         .modal-content select,
         .modal-content textarea {
@@ -345,50 +251,26 @@
             margin-bottom: 15px;
             border: 2px solid #e0e0e0;
             border-radius: 6px;
-            font-size: 1em;
         }
-
-        .modal-content textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
+        .modal-content textarea { min-height: 100px; }
         .modal-botoes {
             display: flex;
             gap: 10px;
             justify-content: flex-end;
         }
-
         .modal-botoes button {
             padding: 10px 20px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
         }
-
-        .btn-salvar {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-cancelar {
-            background: #6c757d;
-            color: white;
-        }
-
-        .fechar-modal {
-            float: right;
-            font-size: 1.5em;
-            cursor: pointer;
-        }
+        .btn-salvar { background: #28a745; color: white; }
+        .btn-cancelar { background: #6c757d; color: white; }
+        .fechar-modal { float: right; font-size: 1.5em; cursor: pointer; }
 
         @media (max-width: 768px) {
-            .grupos-container {
-                grid-template-columns: 1fr;
-            }
-            .estatisticas {
-                grid-template-columns: 1fr 1fr;
-            }
+            .grupos-container { grid-template-columns: 1fr; }
+            .estatisticas { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -400,7 +282,7 @@
         </div>
 
         <div class="main-content">
-            <!-- Estatísticas -->
+            <!-- Cards -->
             <div class="estatisticas">
                 <div class="estatistica-card total" onclick="filtrarStatus('todos')">
                     <h3>Total</h3>
@@ -447,7 +329,7 @@
                 <button onclick="mostrarRelatorios()" class="btn-relatorios">Relatórios</button>
             </div>
 
-            <!-- Grupos -->
+            <!-- Listas -->
             <div class="grupos-container">
                 <div class="grupo atender">
                     <h2>A Atender <span id="contadorPendentes">0</span></h2>
@@ -496,8 +378,8 @@
     </div>
 
     <script>
-        // COLE AQUI A NOVA URL DO GOOGLE APPS SCRIPT
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxrxXvgRCzCt6FOoNWLxdxm6oO6lj-gwmhFWy-Bz7R4JowRhZM-VzXL42qDUFTXpl-M/exec';
+        // SUBSTITUA PELA SUA URL DO GOOGLE APPS SCRIPT
+        const SCRIPT_URL = 'https://script.google.com/macros/s/SUA_URL_AQUI/exec';
         
         let tarefas = [];
         let tarefasFiltradas = [];
@@ -521,31 +403,54 @@
             return `${dia}/${mes}/${ano}`;
         }
 
-        // CARREGAR DADOS
+        // API Google Sheets
+        async function apiRequest(action, data = null) {
+            try {
+                const url = SCRIPT_URL + '?action=' + action;
+                
+                if (data) {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: action, data: data })
+                    });
+                    return { success: true };
+                } else {
+                    const response = await fetch(url);
+                    const result = await response.json();
+                    return result;
+                }
+            } catch (error) {
+                console.log('Erro na API:', error);
+                return { success: false };
+            }
+        }
+
+        // Carregar dados
         async function carregarDados() {
             setLoading(true);
             
             try {
-                const response = await fetch(SCRIPT_URL);
-                const result = await response.json();
+                const result = await apiRequest('listar');
                 
-                if (result.success) {
+                if (result.success && result.data) {
                     tarefas = result.data.map(item => ({
-                        id: Number(item.id) || Date.now(),
+                        id: Number(item.id),
                         solicitante: item.solicitante || '',
-                        dataSolicitacao: item.datasolicitacao || new Date().toISOString().split('T')[0],
-                        dataAgendamento: item.dataagendamento || '',
+                        dataSolicitacao: item.dataSolicitacao || new Date().toISOString().split('T')[0],
+                        dataAgendamento: item.dataAgendamento || '',
                         prioridade: item.prioridade || 'media',
                         agenda: item.agenda || '',
                         descricao: item.descricao || '',
-                        atendida: item.atendida === true || item.atendida === 'TRUE'
+                        atendida: item.atendida === true
                     }));
                     mostrarMensagem('Dados carregados!', 'sucesso');
                 } else {
-                    throw new Error('Erro ao carregar');
+                    tarefas = [];
                 }
             } catch (error) {
-                console.log('Usando dados locais');
+                console.log('Erro ao carregar');
                 tarefas = [];
             }
             
@@ -554,24 +459,7 @@
             setLoading(false);
         }
 
-        // SALVAR DADOS
-        async function salvarNoServidor(dados, acao) {
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: acao, data: dados })
-                });
-                const result = await response.json();
-                return result.success;
-            } catch (error) {
-                console.log('Erro ao salvar no servidor:', error);
-                return false;
-            }
-        }
-
-        // FILTROS
+        // Filtros
         function aplicarFiltros() {
             const termo = document.getElementById('pesquisa').value.toLowerCase();
             const dataSolic = document.getElementById('filtroDataSolicitacao').value;
@@ -603,13 +491,9 @@
         }
 
         function filtrarStatus(tipo) {
-            if (tipo === 'todos') {
-                document.getElementById('filtroStatus').value = '';
-            } else if (tipo === 'pendente') {
-                document.getElementById('filtroStatus').value = 'pendente';
-            } else if (tipo === 'concluido') {
-                document.getElementById('filtroStatus').value = 'atendido';
-            }
+            if (tipo === 'todos') document.getElementById('filtroStatus').value = '';
+            else if (tipo === 'pendente') document.getElementById('filtroStatus').value = 'pendente';
+            else if (tipo === 'concluido') document.getElementById('filtroStatus').value = 'atendido';
             aplicarFiltros();
         }
 
@@ -619,7 +503,7 @@
             aplicarFiltros();
         }
 
-        // RENDERIZAÇÃO
+        // Renderização
         function renderizarTarefas() {
             const pendentes = tarefasFiltradas.filter(t => !t.atendida);
             const atendidos = tarefasFiltradas.filter(t => t.atendida);
@@ -656,15 +540,11 @@
         }
 
         function atualizarContadores() {
-            const total = tarefas.length;
-            const pendentes = tarefas.filter(t => !t.atendida).length;
-            const concluidos = tarefas.filter(t => t.atendida).length;
-            
-            document.getElementById('totalChamados').textContent = total;
-            document.getElementById('totalPendentes').textContent = pendentes;
-            document.getElementById('totalConcluidos').textContent = concluidos;
-            document.getElementById('contadorPendentes').textContent = pendentes;
-            document.getElementById('contadorAtendidos').textContent = concluidos;
+            document.getElementById('totalChamados').textContent = tarefas.length;
+            document.getElementById('totalPendentes').textContent = tarefas.filter(t => !t.atendida).length;
+            document.getElementById('totalConcluidos').textContent = tarefas.filter(t => t.atendida).length;
+            document.getElementById('contadorPendentes').textContent = tarefas.filter(t => !t.atendida).length;
+            document.getElementById('contadorAtendidos').textContent = tarefas.filter(t => t.atendida).length;
         }
 
         function verificarPrazos() {
@@ -720,14 +600,14 @@
                 const index = tarefas.findIndex(t => t.id == id);
                 if (index !== -1) {
                     tarefas[index] = { ...tarefas[index], ...dados };
-                    await salvarNoServidor({ ...dados, id: Number(id) }, 'editar');
+                    await apiRequest('editar', { id: Number(id), ...dados });
                     mostrarMensagem('Chamado atualizado!', 'sucesso');
                 }
             } else {
                 // Novo
                 const novoId = Date.now();
                 tarefas.push({ id: novoId, ...dados, atendida: false });
-                await salvarNoServidor(dados, 'salvar');
+                await apiRequest('salvar', dados);
                 mostrarMensagem('Chamado adicionado!', 'sucesso');
             }
 
@@ -741,7 +621,7 @@
             const index = tarefas.findIndex(t => t.id === id);
             if (index !== -1) {
                 tarefas[index].atendida = checked;
-                await salvarNoServidor({ id, atendida: checked }, 'atualizarStatus');
+                await apiRequest('atualizarStatus', { id, atendida: checked });
                 mostrarMensagem(checked ? 'Concluído!' : 'Reaberto!', 'sucesso');
                 aplicarFiltros();
                 verificarPrazos();
@@ -767,7 +647,7 @@
             if (confirm('Excluir este chamado?')) {
                 setLoading(true);
                 tarefas = tarefas.filter(t => t.id !== id);
-                await salvarNoServidor({ id }, 'excluir');
+                await apiRequest('excluir', { id });
                 setLoading(false);
                 mostrarMensagem('Chamado excluído!', 'sucesso');
                 aplicarFiltros();
@@ -776,7 +656,7 @@
         }
 
         function mostrarRelatorios() {
-            alert(`Total de chamados: ${tarefas.length}\nPendentes: ${tarefas.filter(t => !t.atendida).length}\nConcluídos: ${tarefas.filter(t => t.atendida).length}`);
+            alert(`Total: ${tarefas.length}\nPendentes: ${tarefas.filter(t => !t.atendida).length}\nConcluídos: ${tarefas.filter(t => t.atendida).length}`);
         }
 
         // Eventos
@@ -785,7 +665,7 @@
             if (event.target == modal) fecharModal();
         }
 
-        // Inicializar
+        // Iniciar
         document.addEventListener('DOMContentLoaded', carregarDados);
     </script>
 </body>
