@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Chamados - Sistema Avançado</title>
+    <title>Controle de Chamados</title>
     <link rel="manifest" href="manifest.json">
     <style>
         * {
@@ -619,7 +619,7 @@
 
             <!-- Botões de ação -->
             <div class="filtros-section">
-                <input type="text" id="pesquisa" placeholder="🔍 Pesquisar qualquer termo..." onkeyup="aplicarFiltros()">
+                <input type="text" id="pesquisa" placeholder="Pesquisar qualquer termo..." onkeyup="aplicarFiltros()">
                 <input type="date" id="filtroDataSolicitacao" onchange="aplicarFiltros()">
                 <input type="date" id="filtroDataAgendamento" onchange="aplicarFiltros()">
                 <select id="filtroStatus" onchange="aplicarFiltros()">
@@ -633,9 +633,9 @@
                     <option value="media">Média</option>
                     <option value="baixa">Baixa</option>
                 </select>
-                <button onclick="limparFiltros()" style="background: #6c757d;">🗑️ Limpar</button>
-                <button onclick="abrirModalAdicionar()" class="btn-adicionar">➕ Novo Chamado</button>
-                <button onclick="mostrarRelatorios()" class="btn-relatorios">📊 Relatórios</button>
+                <button onclick="limparFiltros()" style="background: #6c757d;">Limpar</button>
+                <button onclick="abrirModalAdicionar()" class="btn-adicionar">Novo Chamado</button>
+                <button onclick="mostrarRelatorios()" class="btn-relatorios">Relatórios</button>
             </div>
 
             <!-- Gráficos (inicialmente ocultos) -->
@@ -658,7 +658,7 @@
             <div class="grupos-container">
                 <div class="grupo atender">
                     <h2>
-                        📌 A Atender
+                        A Atender
                         <span id="contadorPendentes">0</span>
                     </h2>
                     <div class="tarefas-lista" id="tarefasPendentes"></div>
@@ -666,7 +666,7 @@
 
                 <div class="grupo atendidos">
                     <h2>
-                        ✅ Atendidos
+                        Atendidos
                         <span id="contadorAtendidos">0</span>
                     </h2>
                     <div class="tarefas-lista" id="tarefasAtendidas"></div>
@@ -685,7 +685,7 @@
             <input type="hidden" id="tarefaAtendida" value="false">
             
             <input type="text" id="solicitante" placeholder="Nome do solicitante *" required>
-            <input type="email" id="emailSolicitante" placeholder="Email do solicitante (para notificações)">
+            <input type="email" id="emailSolicitante" placeholder="Email do solicitante">
             
             <label>Data da solicitação *</label>
             <input type="date" id="dataSolicitacao" required>
@@ -768,8 +768,8 @@
         // Service Worker para PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').then(registration => {
-                    console.log('ServiceWorker registrado');
+                navigator.serviceWorker.register('sw.js').catch(error => {
+                    console.log('ServiceWorker não registrado:', error);
                 });
             });
         }
@@ -811,14 +811,9 @@
         // Verificar prazos e enviar notificações
         function verificarPrazos() {
             const hoje = new Date().toISOString().split('T')[0];
-            const amanha = new Date(Date.now() + 86400000).toISOString().split('T')[0];
             
             const venceHoje = tarefas.filter(t => 
                 !t.atendida && t.dataAgendamento === hoje
-            );
-            
-            const venceAmanha = tarefas.filter(t => 
-                !t.atendida && t.dataAgendamento === amanha
             );
             
             document.getElementById('totalVenceHoje').textContent = venceHoje.length;
@@ -827,36 +822,9 @@
                 document.getElementById('alertaPrazo').style.display = 'flex';
                 document.getElementById('mensagemAlerta').innerHTML = 
                     `⚠️ ${venceHoje.length} chamado(s) vencem hoje!`;
-                
-                // Notificação do navegador
-                if (Notification.permission === 'granted') {
-                    new Notification('⚠️ Alerta de Prazos', {
-                        body: `${venceHoje.length} chamado(s) vencem hoje!`,
-                        icon: 'https://via.placeholder.com/64'
-                    });
-                }
             } else {
                 document.getElementById('alertaPrazo').style.display = 'none';
             }
-            
-            // Enviar email para chamados próximos do prazo (simulado)
-            venceHoje.forEach(tarefa => {
-                if (tarefa.emailSolicitante) {
-                    enviarEmailNotificacao(tarefa);
-                }
-            });
-        }
-
-        // Simular envio de email
-        function enviarEmailNotificacao(tarefa) {
-            console.log(`📧 Email enviado para ${tarefa.emailSolicitante}: 
-                Chamado "${tarefa.descricao.substring(0, 30)}..." vence hoje!`);
-            mostrarMensagem(`Email enviado para ${tarefa.emailSolicitante}`, 'info');
-        }
-
-        // Solicitar permissão para notificações
-        if (Notification.permission === 'default') {
-            Notification.requestPermission();
         }
 
         // Funções de anexos
@@ -1076,13 +1044,12 @@
                         id: item.id || index + 1,
                         solicitante: item.solicitante || '',
                         emailSolicitante: item.emailSolicitante || '',
-                        dataSolicitacao: item.datasolicitacao || new Date().toISOString().split('T')[0],
-                        dataAgendamento: item.dataagendamento || '',
+                        dataSolicitacao: item.dataSolicitacao || new Date().toISOString().split('T')[0],
+                        dataAgendamento: item.dataAgendamento || '',
                         prioridade: item.prioridade || 'media',
                         agenda: item.agenda || '',
                         descricao: item.descricao || '',
-                        atendida: item.atendida === true || item.atendida === 'TRUE',
-                        anexos: item.anexos ? JSON.parse(item.anexos) : []
+                        atendida: item.atendida === true || item.atendida === 'TRUE' || item.atendida === true
                     }));
                     
                     mostrarMensagem('Dados carregados com sucesso!', 'sucesso');
@@ -1091,32 +1058,20 @@
                 }
             } catch (error) {
                 console.error('Erro ao carregar:', error);
-                mostrarMensagem('Erro ao carregar dados do Google Sheets. Usando dados locais.', 'erro');
+                mostrarMensagem('Usando dados locais', 'info');
                 
+                // Dados de exemplo
                 tarefas = [
                     {
                         id: 1,
-                        solicitante: 'João Silva',
-                        emailSolicitante: 'joao@email.com',
-                        dataSolicitacao: new Date().toISOString().split('T')[0],
-                        dataAgendamento: new Date(Date.now() + 86400000).toISOString().split('T')[0],
-                        prioridade: 'alta',
-                        agenda: 'Sala de reuniões',
-                        descricao: 'Solicitação de novo computador',
-                        atendida: false,
-                        anexos: []
-                    },
-                    {
-                        id: 2,
-                        solicitante: 'Maria Santos',
-                        emailSolicitante: 'maria@email.com',
-                        dataSolicitacao: '2024-01-10',
-                        dataAgendamento: '2024-01-12',
+                        solicitante: 'Giuliana',
+                        emailSolicitante: '',
+                        dataSolicitacao: '2026-03-02',
+                        dataAgendamento: '2026-03-02',
                         prioridade: 'media',
-                        agenda: 'Auditório',
-                        descricao: 'Manutenção no projetor',
-                        atendida: true,
-                        anexos: []
+                        agenda: 'CNCSHOP',
+                        descricao: 'CONFIGURAÇÃO APLICATIVO NEXT',
+                        atendida: false
                     }
                 ];
             } finally {
@@ -1130,27 +1085,26 @@
             setLoading(true);
             
             try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: acao,
-                        data: dados
-                    })
-                });
+                // Usando JSONP para contornar CORS
+                const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+                window[callbackName] = function(data) {
+                    delete window[callbackName];
+                    document.body.removeChild(script);
+                    setLoading(false);
+                    mostrarMensagem('Operação realizada com sucesso!', 'sucesso');
+                };
+
+                const script = document.createElement('script');
+                script.src = SCRIPT_URL + '?action=' + acao + '&data=' + encodeURIComponent(JSON.stringify(dados)) + '&callback=' + callbackName;
+                document.body.appendChild(script);
                 
-                mostrarMensagem('Operação realizada com sucesso!', 'sucesso');
                 return { success: true };
                 
             } catch (error) {
                 console.error('Erro ao salvar:', error);
                 mostrarMensagem('Erro ao salvar no Google Sheets', 'erro');
-                return { success: false, error: error.message };
-            } finally {
                 setLoading(false);
+                return { success: false, error: error.message };
             }
         }
 
@@ -1192,7 +1146,6 @@
             
             renderizarTarefas();
             atualizarEstatisticas();
-            atualizarGraficos();
         }
 
         function limparFiltros() {
@@ -1219,10 +1172,12 @@
             const total = tarefas.length;
             const pendentes = tarefas.filter(t => !t.atendida).length;
             const concluidos = tarefas.filter(t => t.atendida).length;
+            const venceHoje = tarefas.filter(t => !t.atendida && t.dataAgendamento === new Date().toISOString().split('T')[0]).length;
             
             document.getElementById('totalChamados').textContent = total;
             document.getElementById('totalPendentes').textContent = pendentes;
             document.getElementById('totalConcluidos').textContent = concluidos;
+            document.getElementById('totalVenceHoje').textContent = venceHoje;
             document.getElementById('contadorPendentes').textContent = pendentes;
             document.getElementById('contadorAtendidos').textContent = concluidos;
         }
@@ -1260,7 +1215,7 @@
                     <div class="tarefa-info">
                         <p><strong>Prioridade:</strong> 
                             <span style="color: ${tarefa.prioridade === 'alta' ? '#dc3545' : tarefa.prioridade === 'media' ? '#ffc107' : '#28a745'}">
-                                ${tarefa.prioridade?.toUpperCase() || 'MÉDIA'}
+                                ${(tarefa.prioridade || 'media').toUpperCase()}
                             </span>
                         </p>
                         <p><strong>Solicitação:</strong> ${formatarData(tarefa.dataSolicitacao)}</p>
@@ -1273,21 +1228,9 @@
                         ${tarefa.descricao}
                     </div>
                     
-                    ${tarefa.anexos && tarefa.anexos.length > 0 ? `
-                        <div class="anexos-tarefa">
-                            <strong>Anexos:</strong>
-                            ${tarefa.anexos.map((anexo, index) => `
-                                <div class="anexo-item">
-                                    <span>📎 ${anexo.nome}</span>
-                                    <a href="${anexo.dados}" download="${anexo.nome}">⬇️</a>
-                                </div>
-                            `).join('')}
-                        </div>
-                    ` : ''}
-                    
                     <div class="acoes-tarefa">
-                        <button class="btn-editar" onclick="editarTarefa(${tarefa.id})">✏️ Editar</button>
-                        <button class="btn-excluir" onclick="excluirTarefa(${tarefa.id})">🗑️ Excluir</button>
+                        <button class="btn-editar" onclick="editarTarefa(${tarefa.id})">Editar</button>
+                        <button class="btn-excluir" onclick="excluirTarefa(${tarefa.id})">Excluir</button>
                     </div>
                 </div>
             `;
@@ -1296,7 +1239,8 @@
         function formatarData(data) {
             if (!data) return '-';
             try {
-                return new Date(data).toLocaleDateString('pt-BR');
+                const [ano, mes, dia] = data.split('-');
+                return `${dia}/${mes}/${ano}`;
             } catch {
                 return data;
             }
@@ -1371,12 +1315,11 @@
                 solicitante,
                 emailSolicitante,
                 dataSolicitacao,
-                dataAgendamento,
+                dataAgendamento: dataAgendamento || '',
                 prioridade,
-                agenda,
+                agenda: agenda || '',
                 descricao,
-                atendida: false,
-                anexos: anexosTemporarios
+                atendida: false
             };
             
             if (id) {
@@ -1390,10 +1333,6 @@
                     
                     await salvarNoGoogleSheets({ ...dados, id: parseInt(id) }, 'editar');
                     mostrarMensagem('Solicitação atualizada com sucesso!');
-                    
-                    if (emailSolicitante) {
-                        enviarEmailNotificacao(tarefas[index]);
-                    }
                 }
             } else {
                 const novaTarefa = {
